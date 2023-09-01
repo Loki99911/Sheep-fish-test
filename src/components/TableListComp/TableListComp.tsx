@@ -15,51 +15,63 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
+// import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import { useAppSelector } from "../../hooks/useCustomDispach";
 
 interface Data {
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  images: string;
+  rating: number;
+  stock: number;
+  category: string;
 }
 
 function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
+  id: number,
+  title: string,
+  description: string,
+  price: number,
+  images: string,
+  rating: number,
+  stock: number,
+  category: string
 ): Data {
   return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
+    id,
+    title,
+    description,
+    price,
+    images,
+    rating,
+    stock,
+    category
   };
 }
 
-const rows = [
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Donut", 452, 25.0, 51, 4.9),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-  createData("Honeycomb", 408, 3.2, 87, 6.5),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Jelly Bean", 375, 0.0, 94, 0.0),
-  createData("KitKat", 518, 26.0, 65, 7.0),
-  createData("Lollipop", 392, 0.2, 98, 0.0),
-  createData("Marshmallow", 318, 0, 81, 2.0),
-  createData("Nougat", 360, 19.0, 9, 37.0),
-  createData("Oreo", 437, 18.0, 63, 4.0),
-];
+
+
+// const rows = [
+//   createData("Cupcake", 305, 3.7, 67, 4.3),
+//   createData("Donut", 452, 25.0, 51, 4.9),
+//   createData("Eclair", 262, 16.0, 24, 6.0),
+//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+//   createData("Gingerbread", 356, 16.0, 49, 3.9),
+//   createData("Honeycomb", 408, 3.2, 87, 6.5),
+//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+//   createData("Jelly Bean", 375, 0.0, 94, 0.0),
+//   createData("KitKat", 518, 26.0, 65, 7.0),
+//   createData("Lollipop", 392, 0.2, 98, 0.0),
+//   createData("Marshmallow", 318, 0, 81, 2.0),
+//   createData("Nougat", 360, 19.0, 9, 37.0),
+//   createData("Oreo", 437, 18.0, 63, 4.0),
+// ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -108,35 +120,55 @@ interface HeadCell {
 }
 
 const headCells: readonly HeadCell[] = [
+  // ID, назва, опис, ціна, фото, рейтинг, сток, категорія
+  // id,title,description,price,images,rating,stock,category
   {
-    id: "name",
+    id: "id",
     numeric: false,
     disablePadding: true,
-    label: "Dessert (100g serving)",
+    label: "ID",
   },
   {
-    id: "calories",
+    id: "title",
     numeric: true,
     disablePadding: false,
-    label: "Calories",
+    label: "Product name",
   },
   {
-    id: "fat",
+    id: "description",
     numeric: true,
     disablePadding: false,
-    label: "Fat (g)",
+    label: "Description",
   },
   {
-    id: "carbs",
+    id: "price",
     numeric: true,
     disablePadding: false,
-    label: "Carbs (g)",
+    label: "Price",
   },
   {
-    id: "protein",
+    id: "images",
     numeric: true,
     disablePadding: false,
-    label: "Protein (g)",
+    label: "Photo",
+  },
+  {
+    id: "rating",
+    numeric: true,
+    disablePadding: false,
+    label: "Rating",
+  },
+  {
+    id: "stock",
+    numeric: true,
+    disablePadding: false,
+    label: "Stock",
+  },
+  {
+    id: "category",
+    numeric: true,
+    disablePadding: false,
+    label: "Category",
   },
 ];
 
@@ -227,7 +259,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         }),
       }}
     >
-      {numSelected > 0 ? (
+      {numSelected > 0 && 
         <Typography
           sx={{ flex: "1 1 100%" }}
           color="inherit"
@@ -236,39 +268,42 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         >
           {numSelected} selected
         </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
-      {numSelected > 0 ? (
+      }
+      {numSelected > 0 && 
         <Tooltip title="Delete">
           <IconButton>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      }
     </Toolbar>
   );
 }
 
 export default function TableListComp() {
+  const rowsReq = useAppSelector((state) => state.products.products);
+  console.log(rowsReq);
+  
+  const rows = rowsReq.map(
+    ({ id, title, description, price, images, rating, stock, category }) => {
+      return createData(
+        id,
+        title,
+        description,
+        price,
+        images,
+        rating,
+        stock,
+        category
+      );
+    }
+  );
+  
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (
@@ -282,7 +317,7 @@ export default function TableListComp() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.title);
       setSelected(newSelected);
       return;
     }
@@ -320,9 +355,9 @@ export default function TableListComp() {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
+  // const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setDense(event.target.checked);
+  // };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
@@ -347,7 +382,8 @@ export default function TableListComp() {
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+            // size={dense ? "small" : "medium"}
+            // size={"small"}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -359,17 +395,17 @@ export default function TableListComp() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
+                const isItemSelected = isSelected(row.title);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.name)}
+                    onClick={(event) => handleClick(event, row.title)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={row.title}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
@@ -388,19 +424,24 @@ export default function TableListComp() {
                       scope="row"
                       padding="none"
                     >
-                      {row.name}
+                      {row.id}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="left">{row.title}</TableCell>
+                    <TableCell align="left">{row.description}</TableCell>
+                    <TableCell align="left">{row.price}</TableCell>
+                    <TableCell align="left">{row.images}</TableCell>
+                    <TableCell align="left">{row.rating}</TableCell>
+                    <TableCell align="left">{row.stock}</TableCell>
+                    <TableCell align="left">{row.category}</TableCell>
                   </TableRow>
+                  // id,title,description,price,images,rating,stock,category
                 );
               })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    // height: (dense ? 33 : 53) * emptyRows,
+                    height: 33 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -419,10 +460,12 @@ export default function TableListComp() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> */}
     </Box>
   );
 }
+
+
