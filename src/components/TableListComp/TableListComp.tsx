@@ -413,7 +413,6 @@ export default function TableListComp() {
                     <TableCell align="left">{row.stock}</TableCell>
                     <TableCell align="left">{row.category}</TableCell>
                   </TableRow>
-                  // id,title,description,price,images,rating,stock,category
                 );
               })}
               {emptyRows > 0 && (

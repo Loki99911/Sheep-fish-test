@@ -1,9 +1,9 @@
 import { FC } from "react";
-const SecondPage: FC = () => {
+const FormPage: FC = () => {
   return (
     <>
       <p>Second Page</p>
     </>
   );
 };
-export default SecondPage;
+export default FormPage;

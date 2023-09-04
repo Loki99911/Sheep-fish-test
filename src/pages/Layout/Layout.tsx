@@ -4,7 +4,8 @@ import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Spinner } from "../../components/Spinner/Spinner";
-import { Header } from "../../components/Header/Header";
+import Header from "../../components/Header/Header";
+
 
 const Layout: FC = () => {
   
