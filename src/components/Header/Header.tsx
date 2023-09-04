@@ -50,7 +50,7 @@ export default function Header(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        MAGAZ
       </Typography>
       <Divider />
       <List>
@@ -74,7 +74,7 @@ export default function Header(props: Props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar component="nav" position="static">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -94,10 +94,10 @@ export default function Header(props: Props) {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button sx={{ color: "#fff" }}>
-              <NavLink style={{color:"#fff"}}to="/">List of products</NavLink>
+              <NavLink style={{color:"#fff"}} to="/">List of products</NavLink>
             </Button>
             <Button sx={{ color: "#fff" }}>
-              <NavLink style={{color:"#fff"}}to="/add">Add product</NavLink>
+              <NavLink style={{color:"#fff"}} to="/add">Add product</NavLink>
             </Button>
           </Box>
         </Toolbar>

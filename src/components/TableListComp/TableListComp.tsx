@@ -51,7 +51,7 @@ function createData(
     images,
     rating,
     stock,
-    category
+    category,
   };
 }
 
@@ -239,7 +239,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         }),
       }}
     >
-      {numSelected > 0 && 
+      {numSelected > 0 && (
         <Typography
           sx={{ flex: "1 1 100%" }}
           color="inherit"
@@ -248,14 +248,14 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         >
           {numSelected} selected
         </Typography>
-      }
-      {numSelected > 0 && 
+      )}
+      {numSelected > 0 && (
         <Tooltip title="Delete">
           <IconButton>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      }
+      )}
     </Toolbar>
   );
 }
@@ -350,7 +350,9 @@ export default function TableListComp() {
       ),
     [order, orderBy, page, rowsPerPage]
   );
-
+  console.log(rows);
+  if (rows.length === 0) return;
+  console.log("222");
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -407,7 +409,11 @@ export default function TableListComp() {
                     <TableCell align="left">{row.description}</TableCell>
                     <TableCell align="left">{row.price}</TableCell>
                     <TableCell align="left">
-                      <img src={row.images[0]} alt={row.title} style={{width:100,height:50}}/>
+                      <img
+                        src={row.images[0]}
+                        alt={row.title}
+                        style={{ width: 100, height: 50 }}
+                      />
                     </TableCell>
                     <TableCell align="left">{row.rating}</TableCell>
                     <TableCell align="left">{row.stock}</TableCell>
@@ -445,5 +451,3 @@ export default function TableListComp() {
     </Box>
   );
 }
-
-
